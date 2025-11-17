@@ -1,0 +1,46 @@
+{
+  "name": "ems",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start-server": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently -n SERVER,WORKER -c green,blue \"npm run start-server\" \"npm run start-worker\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.13.1",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
+    "cookie-session": "^2.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "express-session": "^1.18.2",
+    "fs": "^0.0.1-security",
+    "i18n": "^0.15.3",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "multer": "^2.0.2",
+    "mysql2": "^3.15.3",
+    "nodemailer": "^7.0.10",
+    "otp-generator": "^4.0.1",
+    "passport": "^0.7.0",
+    "socket.io": "^4.8.1",
+    "uuid": "^13.0.0",
+    "xlsx": "^0.18.5",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0",
+    "ngrok": "^5.0.0-beta.2",
+    "nodemon": "^3.1.10"
+  }
+}
