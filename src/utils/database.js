@@ -1,4 +1,5 @@
-import { pool } from '../initializers/dbConnection.js';
+import { pool } from "../initializers/dbConnection.js";
+
 /**
  * Run a parameterised query and return the raw result rows.
  * @param {string} sql
@@ -7,10 +8,10 @@ import { pool } from '../initializers/dbConnection.js';
  */
 export const query = async (sql, values = []) => {
   try {
-    const [results] = await pool.query(sql, values);
-    return results;
+    const [rows] = await pool.query(sql, values);
+    return rows;
   } catch (err) {
-    console.error('Error executing query:', err.message);
+    console.error("DB Query Error:", err.sqlMessage || err.message);
     throw err;
   }
 };
@@ -23,12 +24,18 @@ export const query = async (sql, values = []) => {
  */
 export const executeStoredProcedure = async (procName, params = []) => {
   try {
-    const placeholders = params.map(() => '?').join(', ');
+    const placeholders = params.length ? params.map(() => "?").join(", ") : "";
     const sql = `CALL ${procName}(${placeholders})`;
-    const [results] = await pool.query(sql, params);
-    return results;
+
+    const [resultSets] = await pool.query(sql, params);
+
+    // MySQL stored procedures usually return results inside first result set
+    return resultSets;
   } catch (err) {
-    console.error(`Error executing stored procedure ${procName}:`, err.message);
+    console.error(
+      `Stored Procedure Error (${procName}):`,
+      err.sqlMessage || err.message
+    );
     throw err;
   }
 };

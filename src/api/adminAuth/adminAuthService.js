@@ -208,4 +208,5 @@ export const adminService = {
 
     return ResponseBuilder.success("Logout successful");
   },
+
 };

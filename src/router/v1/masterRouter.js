@@ -10,10 +10,10 @@ import { voterRouter } from "../../api/voters/voterRouter.js"
 const router = express.Router();
 router.use("/adminAuth", adminRouter)  // Admin register/login
 router.use("/auth", authRouter);   // User register/login
+router.use(checkJWT);
+
 router.use("/voter", voterRouter)
 
-
-router.use(checkJWT);
 router.use("/user", userRouter);
 router.use("/permissions", permissionRouter)
 
