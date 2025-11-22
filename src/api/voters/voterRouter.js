@@ -6,8 +6,7 @@ export const voterRouter = (() => {
   
   router.post("/addVoter", voterImportController.addVoter);
 
-  router.get("/list", voterImportController.getAllVoters
-  );
+  router.get("/list", voterImportController.getAllVoters );
 
   return router;
 })();
