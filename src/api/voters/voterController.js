@@ -4,133 +4,65 @@ import { voterImportService } from "./voterService.js";
 import { getEpochTime } from "../../utils/epoch.js";
 
 export const voterImportController = {
-  // addVoter: asyncHandler(async (req, res, next) => {
-  //   const {
-  //     v_serial_num,
-  //     v_card_num,
-  //     v_name,
-  //     v_parent_name,
-  //     v_house_num,
-  //     v_age,
-  //     v_gender,
-  //     v_name_mar,
-  //     v_parent_name_mar,
-  //     v_gender_mar,
-  //     b_name,
-  //     b_name_mar,
-  //     ward_num,
-  //     ward_name,
-  //     t_name,
-  //     t_name_mar,
-  //     t_type,
-  //     t_sarpanch_name,
-  //     ps_name,
-  //     ps_name_mar,
-  //     zp_name,
-  //     zp_name_mar,
-  //     details_json
-  //   } = req.body;
-
-  //   const created_by = req.admin_user?.admin_user_id;
-  //   const created_at = getEpochTime();
-  //   console.log("result", req.body);
-
-  //   try {
-  //     const result = await voterImportService.addVoter({
-  //       v_serial_num,
-  //       v_card_num,
-  //       v_name,
-  //       v_parent_name,
-  //       v_house_num,
-  //       v_age,
-  //       v_gender,
-  //       v_name_mar,
-  //       v_parent_name_mar,
-  //       v_gender_mar,
-  //       created_by,
-  //       created_at,
-  //       b_name,
-  //       b_name_mar,
-  //       ward_num,
-  //       ward_name,
-  //       t_name,
-  //       t_name_mar,
-  //       t_type,
-  //       t_sarpanch_name,
-  //       ps_name,
-  //       ps_name_mar,
-  //       zp_name,
-  //       zp_name_mar,
-  //       details_json
-  //     });
-  //     return res.status(201).json(result);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }),
-
   addVoter: asyncHandler(async (req, res, next) => {
-  const records = req.body; // Expect array
+    const records = req.body; // Expect array
 
-  if (!Array.isArray(records) || records.length === 0) {
-    throw new AppError("Please provide voter records array", 400);
-  }
+    if (!Array.isArray(records) || records.length === 0) {
+      throw new AppError("Please provide voter records array", 400);
+    }
 
-  const created_by = req.admin_user?.admin_user_id;
-  const created_at = getEpochTime();
+    const created_by = req.admin_user?.admin_user_id;
+    const created_at = getEpochTime();
 
-  const results = [];
+    const results = [];
 
-  for (const record of records) {
-    record.created_by = created_by;
-    record.created_at = created_at;
+    for (const record of records) {
+      record.created_by = created_by;
+      record.created_at = created_at;
 
-    const result = await voterImportService.addVoter(record);
-    results.push(result);
-    console.log("result", result);
-    console.log("results", results);
-  }
+      const result = await voterImportService.addVoter(record);
+      results.push(result);
+      console.log("result", result);
+      console.log("results", results);
+    }
 
-  return res.status(201).json({
-    status: 1,
-    message: "All voters inserted successfully.",
-    totalInserted: results.length,
-    data: results
-  });
-}),
+    return res.status(201).json({
+      status: 1,
+      message: "All voters inserted successfully.",
+      totalInserted: results.length,
+      data: results,
+    });
+  }),
 
   getAllVoters: asyncHandler(async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const result = await voterImportService.getAllVoter(page, limit);
     return res.status(result.statusCode).json(result);
-
   }),
 
-  // updateFavour: asyncHandler(async (req, res) => {
-  //   const { v_detail_id, v_voter_id, v_favour_status } = req.body;
-
-  //   if (!v_detail_id || !v_voter_id || !v_favour_status) {
-  //     throw new AppError("v_detail_id, v_voter_id and v_favour_status are required", 400);
-  //   }
-
-  //   const result = await voterImportService.updateFavourStatus({
-  //     v_detail_id,
-  //     v_voter_id,
-  //     v_favour_status,
-  //   });
-  //   return res.status(result.statusCode).json(result);
-  // }),
-
+  // update fovour status
   updateBulkFavour: asyncHandler(async (req, res) => {
-  const { records } = req.body;
+    const { records } = req.body;
 
-  if (!records || !Array.isArray(records) || records.length === 0) {
-    throw new AppError("Please send records array", 400);
-  }
+    if (!records || !Array.isArray(records) || records.length === 0) {
+      throw new AppError("Please send records array", 400);
+    }
 
-  const result = await voterImportService.updateBulkFavourStatus({ records });
+    const result = await voterImportService.updateBulkFavourStatus({ records });
 
-  return res.status(result.statusCode).json(result);
-}),
-}
+    return res.status(result.statusCode).json(result);
+  }),
+
+  // update vote status
+  updateVoteStatus: asyncHandler(async (req, res) => {
+    const { records } = req.body;
+    if (!records || !Array.isArray(records) || records.length === 0) {
+      throw new AppError("Please send records array", 400);
+    }
+
+    const result = await voterImportService.updateBulkVoteStatus({ records });
+
+    return res.status(result.statusCode).json(result);
+  }),
+};
