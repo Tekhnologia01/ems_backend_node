@@ -8,5 +8,8 @@ export const voterRouter = (() => {
 
   router.get("/list", voterImportController.getAllVoters );
 
+  // router.put("/update-favour", voterImportController.updateFavour);
+   router.put("/update-favour", voterImportController.updateBulkFavour);
+
   return router;
 })();

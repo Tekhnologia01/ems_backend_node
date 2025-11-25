@@ -141,4 +141,42 @@ export const voterImportService = {
       throw new AppError(error.message || "Error fetching voters", 500);
     }
   },
+
+//  updateFavourStatus: async ({ v_detail_id, v_voter_id, v_favour_status }) => {
+//     // try {
+//      const result = await query(`CALL ems1.updateFavourStatus(?, ?, ?)`, [
+//         v_detail_id,
+//         v_voter_id,
+//         v_favour_status,
+//       ]);
+//         // return res.status(200).json(result);
+//          if (!result || result.affectedRows === 0) {
+//       throw new AppError("Failed to update ", 500);
+//     }
+//     return ResponseBuilder.success(" updated successfully");
+//   },
+
+updateBulkFavourStatus: async ({ records }) => {
+
+  if (!records || !Array.isArray(records) || records.length === 0) {
+    throw new AppError("Array of voter records required", 400);
+  }
+
+  const result = await query(`CALL ems1.updateFavourStatus(?)`, [
+    JSON.stringify(records),
+  ]);
+
+  // Extract updated count from SP result
+  const updatedCount = result?.[0]?.[0]?.updated_count || 0;
+
+  if (updatedCount === 0) {
+    throw new AppError("No records updated", 404);
+  }
+
+  return ResponseBuilder.success(
+    `${updatedCount} voters updated successfully`, 
+    { updated: updatedCount }
+  );
+},
+
 };

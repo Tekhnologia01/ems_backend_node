@@ -106,5 +106,31 @@ export const voterImportController = {
     return res.status(result.statusCode).json(result);
 
   }),
-};
 
+  // updateFavour: asyncHandler(async (req, res) => {
+  //   const { v_detail_id, v_voter_id, v_favour_status } = req.body;
+
+  //   if (!v_detail_id || !v_voter_id || !v_favour_status) {
+  //     throw new AppError("v_detail_id, v_voter_id and v_favour_status are required", 400);
+  //   }
+
+  //   const result = await voterImportService.updateFavourStatus({
+  //     v_detail_id,
+  //     v_voter_id,
+  //     v_favour_status,
+  //   });
+  //   return res.status(result.statusCode).json(result);
+  // }),
+
+  updateBulkFavour: asyncHandler(async (req, res) => {
+  const { records } = req.body;
+
+  if (!records || !Array.isArray(records) || records.length === 0) {
+    throw new AppError("Please send records array", 400);
+  }
+
+  const result = await voterImportService.updateBulkFavourStatus({ records });
+
+  return res.status(result.statusCode).json(result);
+}),
+}
