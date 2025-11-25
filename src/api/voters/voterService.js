@@ -174,7 +174,7 @@ updateBulkFavourStatus: async ({ records }) => {
   }
 
   return ResponseBuilder.success(
-    `${updatedCount} voters updated successfully`, 
+    `${updatedCount} voter favour status updated successfully`, 
     { updated: updatedCount }
   );
 },
