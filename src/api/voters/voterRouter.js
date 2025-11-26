@@ -12,5 +12,8 @@ export const voterRouter = (() => {
 
   router.put("/update-vote-status", voterImportController.updateVoteStatus);
 
+  router.put("/update-cast", voterImportController.updateCaste);
+
+
   return router;
 })();

@@ -65,4 +65,17 @@ export const voterImportController = {
 
     return res.status(result.statusCode).json(result);
   }),
+
+  // update caste 
+  updateCaste: asyncHandler(async (req, res) => {
+  const { records } = req.body || {};
+
+  if (!records || !Array.isArray(records) || records.length === 0) {
+    throw new AppError("records array is required", 400);
+  }
+
+  const result = await voterImportService.updateCaste({ records });
+
+  return res.status(result.statusCode).json(result);
+}),
 };

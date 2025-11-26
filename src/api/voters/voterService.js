@@ -115,4 +115,26 @@ export const voterImportService = {
       { updated: updatedCount }
     );
   },
+
+  // update caste 
+  updateCaste: async ({ records }) => {
+  if (!records || !Array.isArray(records) || records.length === 0) {
+    throw new AppError("Array of voter records required", 400);
+  }
+
+  const result = await query(`CALL ems1.updateCaste(?)`, [
+    JSON.stringify(records)
+  ]);
+
+  const updatedCount = result?.[0]?.[0]?.updated_count || 0;
+
+  if (updatedCount === 0) {
+    throw new AppError("No records updated", 404);
+  }
+
+  return ResponseBuilder.success(
+    `${updatedCount} voter caste updated successfully`,
+    { updated: updatedCount }
+  );
+},
 };
