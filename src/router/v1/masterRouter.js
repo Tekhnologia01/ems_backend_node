@@ -8,6 +8,7 @@ import { voterRouter } from "../../api/voters/voterRouter.js"
 import { boothRouter } from "../../api/booth/boothRouter.js";
 import { wardRouter } from "../../api/wards/wardRouter.js";
 import { townsRouter } from "../../api/Towns/townRouter.js";
+import { religionAndCasteRouter } from "../../api/religionAndCaste/casteRouter.js";
 
 
 const router = express.Router();
@@ -15,11 +16,12 @@ router.use("/adminAuth", adminRouter)  // Admin register/login
 router.use("/auth", authRouter);   // User register/login
 router.use(checkJWT);
 
+router.use("/user", userRouter);
+router.use("/permissions", permissionRouter)
 router.use("/voter", voterRouter)
 router.use("/booth", boothRouter)
 router.use("/wards", wardRouter)
 router.use("/towns", townsRouter)
-router.use("/user", userRouter);
-router.use("/permissions", permissionRouter)
+router.use("/religionAndCaste", religionAndCasteRouter)
 
 export default router;
