@@ -36,12 +36,14 @@ export const adminService = {
     const accessToken = generateAccessToken({
       admin_id: admin.admin_user_id,
       admin_name: admin.admin_name,
+      db_name :admin.db_name,
       is_superadmin: admin.is_superadmin,
       session_id: sessionId,
     });
 
     const refreshToken = generateRefreshToken({
       admin_id: admin.admin_user_id,
+      db_name :admin.db_name,
       session_id: sessionId,
     });
 
@@ -175,6 +177,7 @@ export const adminService = {
     const newAccess = generateAccessToken({
       admin_name: admin.admin_name,
       admin_id: admin.admin_user_id,
+      db_name :admin.db_name,
       is_superadmin: admin.is_superadmin,
       session_id: newSessionId,
     });

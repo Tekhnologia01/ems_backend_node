@@ -22,8 +22,7 @@ export const voterImportController = {
 
       const result = await voterImportService.addVoter(record);
       results.push(result);
-      console.log("result", result);
-      console.log("results", results);
+     
     }
 
     return res.status(201).json({

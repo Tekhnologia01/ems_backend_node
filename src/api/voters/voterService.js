@@ -1,5 +1,5 @@
 import xlsx from "xlsx";
-import { query } from "../../utils/database.js";
+import { query, childQuery } from "../../utils/database.js";
 import { AppError } from "../../middlewares/appError.js";
 import { ResponseBuilder } from "../../utils/response.js";
 
@@ -8,8 +8,8 @@ export const voterImportService = {
     try {
       const detailsJsonString = JSON.stringify(data.details_json || []);
 
-      const [rows] = await query(
-        `CALL ems1.AddVoterWithDetails(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+      const [rows] = await childQuery(
+        `CALL AddVoterWithDetails(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         [
           data.v_serial_num,
           data.v_card_num,
@@ -52,7 +52,7 @@ export const voterImportService = {
     if (!limit || limit < 1) limit = 10;
 
     try {
-      const result = await query("CALL ems1.GetAllVoters(?, ?)", [page, limit]);
+      const result = await childQuery("CALL GetAllVoters(?, ?)", [page, limit]);
 
       const voterRows = result[0];
       const countRows = result[1];
@@ -77,7 +77,7 @@ export const voterImportService = {
       throw new AppError("Array of voter records required", 400);
     }
 
-    const result = await query(`CALL ems1.updateFavourStatus(?)`, [
+    const result = await childQuery(`CALL updateFavourStatus(?)`, [
       JSON.stringify(records),
     ]);
 
@@ -99,7 +99,7 @@ export const voterImportService = {
       throw new AppError("Array of voter records required", 400);
     }
 
-    const result = await query(`CALL ems1.updateBulkVoteStatus(?)`, [
+    const result = await childQuery(`CALL updateBulkVoteStatus(?)`, [
       JSON.stringify(records),
     ]);
 
@@ -122,7 +122,7 @@ export const voterImportService = {
     throw new AppError("Array of voter records required", 400);
   }
 
-  const result = await query(`CALL ems1.updateCaste(?)`, [
+  const result = await childQuery(`CALL updateCaste(?)`, [
     JSON.stringify(records)
   ]);
 

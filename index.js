@@ -80,8 +80,9 @@ app.use(errorHandler);
 
 // Root route
 app.get("/", (req, res) => {
-  res.send("Welcome, to Memorify Gallery!");
+  res.send("Welcome, to EMS ZP!");
 });
+
 
 // -------------------- Error Handlers --------------------
 app.use(zodErrorHandler);

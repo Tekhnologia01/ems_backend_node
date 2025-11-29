@@ -2,6 +2,7 @@
 import jwt from "jsonwebtoken";
 import { pool } from "../initializers/dbConnection.js";
 
+
 export const verifyAdmin = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;

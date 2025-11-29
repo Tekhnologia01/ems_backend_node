@@ -1,3 +1,8 @@
+// import {
+//   childDbConnection,
+//   getChildDB,
+// } from "../initializers/childDbConnection.js";
+import { getActiveDB } from "../initializers/childDbConnection.js";
 import { pool } from "../initializers/dbConnection.js";
 
 /**
@@ -9,6 +14,17 @@ import { pool } from "../initializers/dbConnection.js";
 export const query = async (sql, values = []) => {
   try {
     const [rows] = await pool.query(sql, values);
+    return rows;
+  } catch (err) {
+    console.error("DB Query Error:", err.sqlMessage || err.message);
+    throw err;
+  }
+};
+// ========================
+
+export const childQuery = async ( sql, values = []) => {
+  try {
+    const [rows] = await getActiveDB().query(sql, values);
     return rows;
   } catch (err) {
     console.error("DB Query Error:", err.sqlMessage || err.message);

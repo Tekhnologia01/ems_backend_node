@@ -1,13 +1,13 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { AppError } from "../../middlewares/appError.js";
-import { boothService } from "./boothService.js";
+import { ZPService } from "./zpService.js";
 import { getEpochTime } from "../../utils/epoch.js";
 
-export const boothController = {
+export const ZPController = {
 
-  getAllBooth: asyncHandler(async (req, res) => {
-    const result = await boothService.getBooths(req);
-
+  getAllZP: asyncHandler(async (req, res) => {
+    const result = await ZPService.getZP();
     return res.status(result.statusCode).json(result);
   }),
+  
 };

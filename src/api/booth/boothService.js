@@ -1,4 +1,4 @@
-import { query } from "../../utils/database.js";
+import { childQuery, query } from "../../utils/database.js";
 import { AppError } from "../../middlewares/appError.js";
 import { ResponseBuilder } from "../../utils/response.js";
 
@@ -6,7 +6,7 @@ export const boothService = {
 
   getBooths: async () => {
    
-    const result = await query("CALL ems1.GetAllBooths()");
+    const result = await childQuery("CALL GetAllBooths()");
 
     const booths = result?.[0] || [];
 

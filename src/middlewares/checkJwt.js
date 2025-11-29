@@ -1,7 +1,8 @@
+import { getTenantDB } from "../initializers/childDbConnection.js";
 import { verifyAccessToken } from "../utils/jwt.js";
 import { ResponseBuilder } from "../utils/response.js";
 
-export const checkJWT = (req, res, next) => {
+export const checkJWT = async(req, res, next) => {
   try {
     const publicRoutes = [
       "/user/send-otp",
@@ -39,12 +40,12 @@ export const checkJWT = (req, res, next) => {
         ResponseBuilder.unauthorized("Invalid token")
       );
     }
-
+    await getTenantDB(payload.db_name);
     req.user = payload;
     next();
   } catch (err) {
     return res.status(401).json(
-      ResponseBuilder.unauthorized("Invalid token")
+      ResponseBuilder.unauthorized("Ifffnvalid token")
     );
   }
 };
